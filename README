@@ -1,0 +1,19 @@
+Start ssh with 
+`ssh user@ipaddress`
+
+<br/>
+
+wsl with `wsl`
+
+<br/>
+
+cd into /mnt/ and mount drive with script
+`./mountmac.sh`
+
+<br/>
+
+edit ip address if it doesn't work (changes on diff networks)
+
+
+<br />
+Now in MacOS directory using WSL on 32/64 bit system
