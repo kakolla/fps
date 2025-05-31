@@ -16,4 +16,9 @@ edit ip address if it doesn't work (changes on diff networks)
 
 
 <br />
-Now in MacOS directory using WSL on 32/64 bit system
+
+net use Z: \\192.168.2.99\abhishekkakolla /user:abhishekkakolla mac_pass
+
+<br />
+
+then `Z: `
