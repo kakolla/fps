@@ -9,8 +9,8 @@
 
 using namespace std;
 
-int screenWidth = 120;
-int screenHeight = 40;
+int screenWidth = 240;
+int screenHeight = 80;
 
 
 float fPlayerX = 8.0f; // player X coord 
