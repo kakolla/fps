@@ -193,13 +193,24 @@ int main() {
 
         }
 
+        // display map
+        // uses dimensions of map
+        for (int nx = 0; nx < nMapWidth; ++nx) {
+            for (int ny = 0; ny < nMapHeight; ++ny) {
+                screen[(ny + 1) * screenWidth + nx] = map[ny * nMapWidth + nx];
+            }
+        }
+        screen[((int)fPlayerY+1) * screenWidth + (int)fPlayerX] = 'P'; // mark player position
+        
+
+
 
         // Write to screen
         screen[screenWidth * screenHeight - 1] = '\0'; // set last char of screen array to null char
         // handle, buffer, number of bytes, coords of text to be written, 
         WriteConsoleOutputCharacterW(hConsole, screen, screenWidth*screenHeight, {0,0}, &dwBytesWritten);
 
-
+        
         Sleep(8);
     }
 
