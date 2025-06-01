@@ -3,6 +3,7 @@
 #include <cmath>
 #include <Windows.h>
 #include <conio.h>  // for macos converted inputs
+#include <chrono> // for fps
 
 
 using namespace std;
@@ -52,9 +53,18 @@ int main() {
     SetConsoleActiveScreenBuffer(hConsole); // set buffer target to the console
     DWORD dwBytesWritten = 0;
 
-    
+   
+    auto tp1 = chrono::system_clock::now();
+    auto tp2 = chrono::system_clock::now();
+
+
     // Game loop
     while(1) {
+        // get system time for fps synchronization
+        tp2 = chrono::system_clock::now();
+        chrono::duration<float> elapsedTime = tp2 - tp1;
+        tp1 = tp2;
+        float fElapsedTime = elapsedTime.count();
         
 
         // Controls
@@ -62,9 +72,9 @@ int main() {
         if (_kbhit()) { // non blocking IO
             char ch = _getch();
             if (ch == 'a' || ch == 'A')
-                fPlayerAngle -= 0.1f;
+                fPlayerAngle -= 0.1f * fElapsedTime * 2;
             else if (ch == 'd' || ch == 'D')
-                fPlayerAngle += 0.1f;
+                fPlayerAngle += 0.1f * fElapsedTime * 2;
         }
 
 
@@ -117,6 +127,19 @@ int main() {
             int nCeiling = (float)(screenHeight / 2.0) - screenHeight / ((float)fDistanceToWall);
             int nFloor = screenHeight - nCeiling;
 
+
+            // -- Shading --
+            // determine which char to render (shading) based on perspective (distance) of wall
+            short nShade = ' ';
+            if (fDistanceToWall <= fDepth / 4.0f) nShade = 0x2588;
+            else if (fDistanceToWall < fDepth / 3.0f) nShade = 0x2593;
+            else if (fDistanceToWall < fDepth / 2.0f) nShade = 0x2592;
+            else if (fDistanceToWall < fDepth ) nShade = 0x2591;
+            else nShade = ' ';
+
+
+
+
             // clamp nCeiling & nFloor
             // to screen height range
             nCeiling = max(0, min(screenHeight -1, nCeiling));
@@ -126,7 +149,7 @@ int main() {
             // calculate distance to ceiling and floor
             for (int y = 0; y < screenHeight; y++) {
                 if (y < nCeiling) screen[y*screenWidth + x] = ' ';
-                else if (y > nCeiling && y <= nFloor) screen[y*screenWidth + x] = '#';
+                else if (y > nCeiling && y <= nFloor) screen[y*screenWidth + x] = nShade;
                 else screen[y*screenWidth + x] = '.';
             }
 
@@ -139,7 +162,7 @@ int main() {
         WriteConsoleOutputCharacterW(hConsole, screen, screenWidth*screenHeight, {0,0}, &dwBytesWritten);
 
 
-        Sleep(16);
+        Sleep(8);
     }
 
     return 0;
