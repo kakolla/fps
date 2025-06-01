@@ -173,6 +173,7 @@ int main() {
             nFloor = max(0, min(screenHeight -1, nFloor));
 
 
+            // here is where rendering occurs
             // calculate distance to ceiling and floor
             wchar_t floorShade;
             for (int y = 0; y < screenHeight; y++) {
