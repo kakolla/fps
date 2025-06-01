@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <string>
 #include <Windows.h>
 #include <conio.h>  // for macos converted inputs
 #include <chrono> // for fps
@@ -206,6 +207,20 @@ int main() {
         for (int i = 0; i < 9; ++i) {
             screen[i] = letters[i];
         }
+        float fps = std::trunc((float) 1.0 /  elapsedTime.count()) ;
+        string nFPS = to_string(fps);
+        nFPS += " FPS";
+        int l = nFPS.length();
+ 
+        char fpsArr[l];
+        for (int k = 0; k < l; ++k) {
+            fpsArr[k] = nFPS[k];
+        }
+        int p = 0;
+        for (int i = 12; i < 12+l; ++i) {
+            screen[i] =  fpsArr[p];
+            p++;
+        } 
         
 
 
@@ -216,7 +231,7 @@ int main() {
         WriteConsoleOutputCharacterW(hConsole, screen, screenWidth*screenHeight, {0,0}, &dwBytesWritten);
 
         
-        Sleep(8);
+        Sleep(2);
     }
 
     return 0;
