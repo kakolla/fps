@@ -36,12 +36,12 @@ int main() {
     map += L"#..............#";
     map += L"#..............#";
     map += L"#..............#";
+    map += L"#.........#....#";
     map += L"#..............#";
     map += L"#..............#";
     map += L"#..............#";
     map += L"#..............#";
-    map += L"#..............#";
-    map += L"#..............#";
+    map += L"#......#####...#";
     map += L"#..............#";
     map += L"################";
 
@@ -72,18 +72,18 @@ int main() {
         if (_kbhit()) { // non blocking IO
             char ch = _getch();
             if (ch == 'a' || ch == 'A')
-                fPlayerAngle -= 0.1f * fElapsedTime * 20.0f;
+                fPlayerAngle -= 0.2f * fElapsedTime * 20.0f;
             else if (ch == 'd' || ch == 'D')
-                fPlayerAngle += 0.1f * fElapsedTime * 20.0f;
+                fPlayerAngle += 0.2f * fElapsedTime * 20.0f;
             else if (ch == 'w' || ch == 'W') {
                 // direction unit vector * movement speed 
-                fPlayerX += sinf(fPlayerAngle) * 5.0f * fElapsedTime;
-                fPlayerY += cosf(fPlayerAngle) * 5.0f * fElapsedTime;
+                fPlayerX += sinf(fPlayerAngle) * 10.0f * fElapsedTime;
+                fPlayerY += cosf(fPlayerAngle) * 10.0f * fElapsedTime;
             }
             else if (ch == 's' || ch == 'S') {
                 // direction unit vector * movement speed 
-                fPlayerX -= sinf(fPlayerAngle) * 5.0f * fElapsedTime;
-                fPlayerY -= cosf(fPlayerAngle) * 5.0f * fElapsedTime;
+                fPlayerX -= sinf(fPlayerAngle) * 10.0f * fElapsedTime;
+                fPlayerY -= cosf(fPlayerAngle) * 10.0f * fElapsedTime;
             }
         }
 
@@ -157,10 +157,21 @@ int main() {
 
 
             // calculate distance to ceiling and floor
+            wchar_t floorShade;
             for (int y = 0; y < screenHeight; y++) {
                 if (y < nCeiling) screen[y*screenWidth + x] = ' ';
                 else if (y > nCeiling && y <= nFloor) screen[y*screenWidth + x] = nShade;
-                else screen[y*screenWidth + x] = '.';
+                else {
+                    // shade the floor (based on distance)
+                    float distFloor = 1.0f - (((float)y - screenHeight/2.0f) / ((float)screenHeight/2.0f));
+                    if (distFloor<0.25) floorShade = '#';
+                    else if (distFloor < 0.5) floorShade = 'x';
+                    else if (distFloor < 0.75) floorShade = '.';
+                    else if (distFloor < 0.9) floorShade = '-';
+                    else floorShade = ' ';
+                    screen[y*screenWidth + x] = floorShade;
+
+                }
             }
 
         }
