@@ -79,11 +79,28 @@ int main() {
                 // direction unit vector * movement speed 
                 fPlayerX += sinf(fPlayerAngle) * 10.0f * fElapsedTime;
                 fPlayerY += cosf(fPlayerAngle) * 10.0f * fElapsedTime;
+
+                // collision detection
+                if (map[(int) fPlayerY * nMapWidth + (int) fPlayerX] == '#') {
+                    // map[coord], where coord is converted to 1d coords
+                    // y * width + x
+
+                    // undo
+                    fPlayerX -= sinf(fPlayerAngle) * 10.0f * fElapsedTime;
+                    fPlayerY -= cosf(fPlayerAngle) * 10.0f * fElapsedTime;
+                }
             }
             else if (ch == 's' || ch == 'S') {
                 // direction unit vector * movement speed 
                 fPlayerX -= sinf(fPlayerAngle) * 10.0f * fElapsedTime;
                 fPlayerY -= cosf(fPlayerAngle) * 10.0f * fElapsedTime;
+
+                // collision detection
+                if (map[(int) fPlayerY * nMapWidth + (int) fPlayerX] == '#') {
+                    // undo
+                    fPlayerX += sinf(fPlayerAngle) * 10.0f * fElapsedTime;
+                    fPlayerY += cosf(fPlayerAngle) * 10.0f * fElapsedTime;
+                }
             }
         }
 
