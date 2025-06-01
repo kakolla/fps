@@ -72,9 +72,19 @@ int main() {
         if (_kbhit()) { // non blocking IO
             char ch = _getch();
             if (ch == 'a' || ch == 'A')
-                fPlayerAngle -= 0.1f * fElapsedTime * 2;
+                fPlayerAngle -= 0.1f * fElapsedTime * 20.0f;
             else if (ch == 'd' || ch == 'D')
-                fPlayerAngle += 0.1f * fElapsedTime * 2;
+                fPlayerAngle += 0.1f * fElapsedTime * 20.0f;
+            else if (ch == 'w' || ch == 'W') {
+                // direction unit vector * movement speed 
+                fPlayerX += sinf(fPlayerAngle) * 5.0f * fElapsedTime;
+                fPlayerY += cosf(fPlayerAngle) * 5.0f * fElapsedTime;
+            }
+            else if (ch == 's' || ch == 'S') {
+                // direction unit vector * movement speed 
+                fPlayerX -= sinf(fPlayerAngle) * 5.0f * fElapsedTime;
+                fPlayerY -= cosf(fPlayerAngle) * 5.0f * fElapsedTime;
+            }
         }
 
 
