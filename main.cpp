@@ -201,6 +201,10 @@ int main() {
             }
         }
         screen[((int)fPlayerY+1) * screenWidth + (int)fPlayerX] = 'P'; // mark player position
+        char letters[] = "raycaster";
+        for (int i = 0; i < 9; ++i) {
+            screen[i] = letters[i];
+        }
         
 
 
