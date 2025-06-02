@@ -1,3 +1,8 @@
+<img width="1448" alt="image" src="https://github.com/user-attachments/assets/3d3447cd-85ca-4c46-b145-efaa0bcbd190" />
+
+
+
+Some setup </br >
 Start ssh with 
 `ssh user@ipaddress`
 
